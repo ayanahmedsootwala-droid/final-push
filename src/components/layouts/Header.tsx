@@ -13,8 +13,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
-import { useLanguage, LANG_FLAGS, LANG_FULL_LABELS, LANG_LABELS } from '@/contexts/LanguageContext';
-import type { Language } from '@/types/types';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { LANGUAGE_FULL_LABELS, LANGUAGE_LABELS, LANGUAGE_MARKERS, LANGUAGE_OPTIONS } from '@/constants/languages';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
 import { useNotifications } from '@/hooks/useNotifications';
 import { cn } from '@/lib/utils';
@@ -236,16 +236,16 @@ export function Header() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm" className={cn('hidden sm:flex items-center gap-1.5 h-8 px-2 rounded-lg', iconCls)}>
                     <Globe className="w-3.5 h-3.5" />
-                    <span className="text-xs font-medium">{LANG_LABELS[lang]}</span>
+                    <span className="text-xs font-medium">{LANGUAGE_LABELS[lang]}</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-40">
-                  {(['en','ur'] as Language[]).map(l => (
-                    <DropdownMenuItem key={l} onClick={() => setLang(l)}
+                  {LANGUAGE_OPTIONS.map(({ code }) => (
+                    <DropdownMenuItem key={code} onClick={() => setLang(code)}
                       className="flex items-center gap-2 text-sm cursor-pointer">
-                      <span>{LANG_FLAGS[l]}</span>
-                      <span className="flex-1">{LANG_FULL_LABELS[l]}</span>
-                      {lang === l && <Check className="w-3.5 h-3.5 text-primary" />}
+                      <span>{LANGUAGE_MARKERS[code]}</span>
+                      <span className="flex-1">{LANGUAGE_FULL_LABELS[code]}</span>
+                      {lang === code && <Check className="w-3.5 h-3.5 text-primary" />}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -419,10 +419,10 @@ export function Header() {
                     <div className="px-3 pt-1 pb-2">
                       <p className="text-xs text-muted-foreground mb-1.5 flex items-center gap-1.5"><Globe className="w-3.5 h-3.5" />{t('language')}</p>
                       <div className="grid grid-cols-2 gap-1">
-                        {(['en','ur'] as Language[]).map(l => (
-                          <button key={l} onClick={() => setLang(l)}
-                            className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs transition-colors ${lang === l ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground'}`}>
-                            <span>{LANG_FLAGS[l]}</span>{LANG_FULL_LABELS[l]}
+                        {LANGUAGE_OPTIONS.map(({ code }) => (
+                          <button key={code} onClick={() => setLang(code)}
+                            className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs transition-colors ${lang === code ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground hover:text-foreground'}`}>
+                            <span>{LANGUAGE_MARKERS[code]}</span>{LANGUAGE_FULL_LABELS[code]}
                           </button>
                         ))}
                       </div>
@@ -481,7 +481,7 @@ export function Header() {
                     <p className="px-4 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">Listings</p>
                     {carResults.map(car => (
                       <button key={car.id}
-                        onClick={() => { navigate(`/cars/${car.id}`); setCmdOpen(false); setCmdQuery(''); }}
+                        onClick={() => { navigate(`/car/${car.id}`); setCmdOpen(false); setCmdQuery(''); }}
                         className="flex items-center gap-3 w-full px-4 py-2.5 hover:bg-muted transition-colors text-left">
                         <div className="w-7 h-7 rounded bg-secondary flex items-center justify-center shrink-0">
                           <Car className="w-3.5 h-3.5 text-muted-foreground" />
