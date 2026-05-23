@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import {
   Search, ChevronRight, ArrowRight, Shield, Award, Clock, TrendingUp,
   Sparkles, MapPin, Star, ChevronLeft, Zap, Car as CarIcon, Gavel
@@ -19,6 +20,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/db/supabase';
 import type { CarBrand, Testimonial } from '@/types/types';
 import { cn } from '@/lib/utils';
+import { DEFAULT_SITE_DESCRIPTION, DEFAULT_SITE_NAME } from '@/lib/site';
 
 /* ── Animated counter ───────────────────────────────── */
 function useCountUp(target: number, duration = 1400) {
@@ -627,8 +629,16 @@ function HomeSections() {
 }
 
 export default function HomePage() {
+  const { getSetting } = useSiteSettings();
+  const siteName = getSetting('site_name', DEFAULT_SITE_NAME);
+  const siteDescription = getSetting('site_description', DEFAULT_SITE_DESCRIPTION);
+
   return (
     <PublicLayout>
+      <Helmet>
+        <title>{siteName}</title>
+        <meta name="description" content={siteDescription} />
+      </Helmet>
       <HeroSection />
       <div className="hero-bottom-bridge" aria-hidden="true" />
       <HomeSections />

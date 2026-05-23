@@ -16,6 +16,7 @@ import { formatCurrency } from '@/lib/utils-xyz';
 import { toast } from 'sonner';
 import type { Dealership, Car as CarType } from '@/types/types';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { DEFAULT_SITE_NAME } from '@/lib/site';
 
 export default function DealerPublicPage() {
   const { t } = useLanguage();
@@ -79,8 +80,8 @@ export default function DealerPublicPage() {
   return (
     <PublicLayout>
       <Helmet>
-        <title>{`${dealership.name} | XYZ Automobiles Dealer`}</title>
-        <meta name="description" content={`${dealership.name} — Verified dealership on XYZ Automobiles. ${stats.active} vehicles available.`} />
+        <title>{`${dealership.name} | ${DEFAULT_SITE_NAME} Dealer`}</title>
+        <meta name="description" content={`${dealership.name} - Verified dealership on ${DEFAULT_SITE_NAME}. ${stats.active} vehicles available.`} />
       </Helmet>
       <div className="pt-[68px] min-h-screen">
         {/* Hero */}

@@ -27,6 +27,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
 import AiSpecsAssistant from '@/components/ai/AiSpecsAssistant';
 import { cn } from '@/lib/utils';
+import { DEFAULT_SITE_NAME } from '@/lib/site';
 
 export default function CarDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -142,6 +143,7 @@ export default function CarDetailPage() {
   // Contact details — respects show_contact_type set by admin
   const contactType = car?.show_contact_type || 'admin';
   const adminPhone = getSetting('contact_phone', '+92 300 1234567');
+  const siteName = getSetting('site_name', DEFAULT_SITE_NAME);
   const adminWhatsapp = getSetting('whatsapp_number', '+923001234567').replace(/\s+/g, '');
   const dealerPhone = car?.dealership_id
     ? (getSetting('contact_phone', '+92 300 1234567'))
@@ -156,8 +158,8 @@ export default function CarDetailPage() {
   return (
     <PublicLayout>
       <Helmet>
-        <title>{`${car.year} ${car.brand_name} ${car.model_name} — ${formatCurrency(car.price)} | XYZ Automobiles`}</title>
-        <meta name="description" content={car.description || `${car.year} ${car.brand_name} ${car.model_name}, ${car.mileage?.toLocaleString()} km, ${car.city}. Available at XYZ Automobiles.`} />
+        <title>{`${car.year} ${car.brand_name} ${car.model_name} - ${formatCurrency(car.price)} | ${siteName}`}</title>
+        <meta name="description" content={car.description || `${car.year} ${car.brand_name} ${car.model_name}, ${car.mileage?.toLocaleString()} km, ${car.city}. Available at ${siteName}.`} />
         <meta property="og:title" content={`${car.year} ${car.brand_name} ${car.model_name}`} />
         <meta property="og:image" content={images[0]} />
         <meta property="og:url" content={window.location.href} />

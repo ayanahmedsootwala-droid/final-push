@@ -25,6 +25,7 @@ import { toast } from 'sonner';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { DEFAULT_SITE_NAME } from '@/lib/site';
 
 interface BidEntry {
   id: string;
@@ -79,6 +80,7 @@ function Countdown({ endTime }: { endTime: string }) {
 
 export default function AuctionDetailPage() {
   const { t } = useLanguage();
+  const siteName = DEFAULT_SITE_NAME;
   const { id } = useParams<{ id: string }>();
   const { auction, loading } = useAuction(id!);
   const { user } = useAuth();
@@ -256,8 +258,8 @@ export default function AuctionDetailPage() {
   return (
     <PublicLayout>
       <Helmet>
-        <title>{`${auction.title} | XYZ Auctions`}</title>
-        <meta name="description" content={`Bid on ${auction.title}. Current bid: ${formatCurrency(effectiveBid)}`} />
+        <title>{`${auction.title} | ${siteName} Auctions`}</title>
+        <meta name="description" content={`Bid on ${auction.title}. Current bid: ${formatCurrency(effectiveBid)} on ${siteName}.`} />
       </Helmet>
 
       <div className="pt-[68px] min-h-screen">

@@ -1,5 +1,6 @@
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { DEFAULT_SITE_NAME } from "@/lib/site";
 
 const PageMeta = ({
   title,
@@ -9,7 +10,7 @@ const PageMeta = ({
   description: string;
 }) => (
   <Helmet>
-    <title>{title}</title>
+    <title>{title ? `${title} | ${DEFAULT_SITE_NAME}` : DEFAULT_SITE_NAME}</title>
     <meta name="description" content={description} />
   </Helmet>
 );
